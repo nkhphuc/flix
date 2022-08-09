@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Flix</title>
+
+    <title>MoviesDB</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
   </head>
 
   <body>
-    <%= yield %>
+
+    <header>
+      <h1>MoviesDB</h1>
+    </header>
+
+    <div class="content">
+      <%= yield %>
+    </div>
+
+    <footer>
+      <p>
+        Copyright &copy; 2005-<%= Time.now.year %>
+        <%= link_to 'The Pragmatic Studio','https://pragmaticstudio.com' %>
+      </p>
+    </footer>
+
   </body>
 </html>
