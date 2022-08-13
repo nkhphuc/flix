@@ -14,20 +14,17 @@
 
   <body>
 
-    <header>
-      <h1>MoviesDB</h1>
-    </header>
-
+    <%= render "layouts/header" %>
+    
     <div class="content">
+
+      <%= render "layouts/flash" %>
+
       <%= yield %>
+
     </div>
 
-    <footer>
-      <p>
-        Copyright &copy; 2005-<%= Time.now.year %>
-        <%= link_to 'The Pragmatic Studio','https://pragmaticstudio.com' %>
-      </p>
-    </footer>
+    <%= render "layouts/footer" %>
 
   </body>
 </html>
