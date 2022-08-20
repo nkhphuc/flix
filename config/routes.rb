@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  # Defines the root path route ("/")
-  # root "articles#index"
-  root "movies#index"
+  resources :genres
+  resources :users
   resources :movies do
     resources :reviews
+    resources :favorites, only: [:create, :destroy]
   end
+  resource :session, only: [:new, :create, :destroy]
+
+  root "movies#index"
+
+  get "signup" => "users#new"
+  get "signin" => "sessions#new"
+
+  get "movies/filter/:filter" => "movies#index", as: :filtered_movies
 end

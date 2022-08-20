@@ -1,7 +1,17 @@
 <section class="movie-details">
+
   <div class="image">
     <%= image_tag @movie.image_file_name %>
   </div>
+
+  <% if current_user %>
+    <div class="faves">
+      <%= fave_or_unfave_button(@movie, @favorite) %>
+      <div class="count">
+        <%= @fans.size %>
+      </div>
+    </div>
+  <% end %>
 
   <div class="details">
     <h1><%= @movie.title %></h1>
@@ -9,6 +19,7 @@
       <%= year_of(@movie) %> &bull; <%= @movie.rating %>
     </h2>
     <div class="reviews">
+      <%= render "shared/stars", percent: @movie.average_stars_as_percent %>
       <%= link_to pluralize(@movie.reviews.size, "review"),
             movie_reviews_path(@movie) %>
     </div>
@@ -35,9 +46,36 @@
         <td><%= total_gross(@movie) %></td>
       </tr>
     </table>
+    <%= link_to "Write Review", new_movie_review_path(@movie),
+              class: "review" %>
   </div>
+
+  <aside>
+    <% if @fans.present? %>
+      <h4>Fans</h4>
+      <ul>
+        <% @fans.each do |user| %>
+          <li>
+            <%= link_to user.name, user %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if @genres.present? %>
+      <h4>Genres</h4>
+      <ul>
+        <% @genres.each do |g| %>
+        <li><%= g.name %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+  </aside>
+  
 </section>
 
+<% if current_user_admin? %>
 <section class="admin">
   <%= link_to "Edit", edit_movie_path(@movie), class: 'button' %>
   <%= link_to "Delete", movie_path(@movie), class: 'button', data: {
@@ -45,3 +83,4 @@
     turbo_confirm: "Are you sure?"
     } %>
 </section>
+<% end %>
